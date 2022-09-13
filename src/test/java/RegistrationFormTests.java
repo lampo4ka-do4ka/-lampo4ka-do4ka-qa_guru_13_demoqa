@@ -10,6 +10,21 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationFormTests {
+    // Student's data
+    String firstName = "Ivan";
+    String lastName = "Ivanov";
+    String email = "ivan@ivanov.nl";
+    String gender = "Female";
+    String phone = "1234567365";
+    String year = "1999";
+    int month = 2;
+    int day = 6;
+    String subject = "Chemistry";
+    String hobby = "Sports";
+    String pictureFile = "Hw-1.png";
+    String address = "Lenina 1";
+    String state = "NCR";
+    String city = "Noida";
     @BeforeAll
     static void beforeAll() {
         baseUrl = "https://demoqa.com";
@@ -22,21 +37,6 @@ public class RegistrationFormTests {
         open("/automation-practice-form");
         executeJavaScript("$('footer').remove()");
         executeJavaScript("$('#fixedban').remove()");
-        // Student's data
-        String firstName = "Ivan";
-        String lastName = "Ivanov";
-        String email = "ivan@ivanov.nl";
-        String gender = "Female";
-        String phone = "1234567365";
-        String year = "1999";
-        int month = 2;
-        int day = 6;
-        String subject = "Chemistry";
-        String hobby = "Sports";
-        String pictureFile = "Hw-1.png";
-        String address = "Lenina 1";
-        String state = "NCR";
-        String city = "Noida";
         // Fill in the form
         // First name
         $("#firstName").setValue(firstName);
@@ -72,9 +72,17 @@ public class RegistrationFormTests {
         $("#submit").click();
         // Check results
         Assertions.assertTrue($(".modal-content").exists());
-        $(".modal-content").shouldHave(text(firstName + " " + lastName), text(email)
-                ,text(gender),text(phone),text(day + " " + Month.of(month + 1).toString() + "," + year)
-                ,text(subject),text(hobby),text(pictureFile),text(address),text(state),text(city));
+        $(".modal-content").shouldHave(text(firstName + " " + lastName)
+                , text(email)
+                ,text(gender),
+                text(phone),
+                text(day + " " + Month.of(month + 1).toString() + "," + year)
+                ,text(subject)
+                ,text(hobby)
+                ,text(pictureFile)
+                ,text(address)
+                ,text(state)
+                ,text(city));
     }
 
 }
