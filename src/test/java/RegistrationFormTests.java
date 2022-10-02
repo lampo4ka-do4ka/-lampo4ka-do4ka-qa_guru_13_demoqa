@@ -1,15 +1,10 @@
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.time.Month;
-
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class RegistrationFormTests {
+public class RegistrationFormTests extends TestBase {
     // Student's data
     String firstName = "Ivan";
     String lastName = "Ivanov";
@@ -25,11 +20,6 @@ public class RegistrationFormTests {
     String address = "Lenina 1";
     String state = "NCR";
     String city = "Noida";
-    @BeforeAll
-    static void beforeAll() {
-        baseUrl = "https://demoqa.com";
-        browserSize = "1600x900";
-    }
 
     @Test
     void registrationFormTest() {
@@ -71,18 +61,29 @@ public class RegistrationFormTests {
         // Submit the form
         $("#submit").click();
         // Check results
-        Assertions.assertTrue($(".modal-content").exists());
-        $(".modal-content").shouldHave(text(firstName + " " + lastName)
-                , text(email)
-                ,text(gender),
-                text(phone),
-                text(day + " " + Month.of(month + 1).toString() + "," + year)
-                ,text(subject)
-                ,text(hobby)
-                ,text(pictureFile)
-                ,text(address)
-                ,text(state)
-                ,text(city));
+
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+
+//        Assertions.assertTrue($(".modal-content").exists());
+//        $(".modal-content").shouldHave(text(firstName + " " + lastName)
+//                , text(email), text(gender), text(phone)
+//                , text(day + " " + Month.of(month + 1).toString() + "," + year)
+//                , text(subject), text(hobby), text(pictureFile)
+//                , text(address), text(state), text(city));
+        checkTable("Student Name", firstName + " " + lastName);
+        checkTable("Student Email", email);
+        checkTable("Gender", gender);
+        checkTable("Mobile", phone);
+        checkTable("Date of Birth", day + " " + Month.of(month + 1).toString() + "," + year);
+        checkTable("Subjects", subject);
+        checkTable("Hobbies", hobby);
+        checkTable("Picture", pictureFile);
+        checkTable("Address", address);
+        checkTable("State and City", state + " " + city);
+    }
+    void checkTable(String key, String value) {
+        $(".table-responsive").$(byText(key)).
+                parent().shouldHave(text(value));
     }
 
 }
